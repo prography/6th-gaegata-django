@@ -1,1 +1,1 @@
-[API 문서](http://gaegata.fourman.store/swagger/)
+[API 문서](https://api.gaegata.com/swagger/)
