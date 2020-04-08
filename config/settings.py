@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 secret_file = os.path.join(BASE_DIR, "secrets.json")
 
 with open(secret_file) as f:
-    secrets = json.loads(f.read())
+   secrets = json.loads(f.read())
 
 
 def get_secret(setting, secrets=secrets):
@@ -98,22 +98,22 @@ if DEBUG == True:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'fourman_db',
-            'USER': 'fourman',
-            'PASSWORD': get_secret('RDS_PASSWORD'),
-            'HOST': 'fourman-db.cjdsbfkv9mbq.ap-northeast-2.rds.amazonaws.com',
-            'PORT': '5432',
+            'NAME': get_secret("NAME"),
+            'USER': get_secret("USER"),
+            'PASSWORD': get_secret("PASSWORD"),
+            'HOST': get_secret("HOST"),
+            'PORT': get_secret("PORT"),
         }
     }
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'fourman_db',
-            'USER': 'fourman',
-            'PASSWORD': get_secret('RDS_PASSWORD'),
-            'HOST': 'fourman-db.cjdsbfkv9mbq.ap-northeast-2.rds.amazonaws.com',
-            'PORT': '5432',
+            'NAME': get_secret("NAME"),
+            'USER': get_secret("USER"),
+            'PASSWORD': get_secret("PASSWORD"),
+            'HOST': get_secret("HOST"),
+            'PORT': get_secret("PORT"),
         }
     }
 
@@ -151,22 +151,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = get_secret("AWS_SECRET_ACCESS_KEY")
-AWS_REGION = 'ap-northeast-2'
-AWS_STORAGE_BUCKET_NAME = 'storage.fourman.store'
-AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
-AWS_S3_SECURE_URLS = True  # https
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static'
-
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
-
+# AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY = get_secret("AWS_SECRET_ACCESS_KEY")
+# AWS_REGION = 'ap-northeast-2'
+# AWS_STORAGE_BUCKET_NAME = 'storage.fourman.store'
+# AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
+# AWS_S3_SECURE_URLS = True  # https
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_LOCATION = 'static'
+#
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
+STATIC_URL = '/static/'
 # Custom user model
 AUTH_USER_MODEL = "accounts.User"
 
@@ -177,8 +177,8 @@ REST_FRAMEWORK = {
 }
 
 # Social login 
-SOCIAL_AUTH_GITHUB_KEY = get_secret('SOCIAL_AUTH_GITHUB_KEY')
-SOCIAL_AUTH_GITHUB_SECRET = get_secret('SOCIAL_AUTH_GITHUB_SECRET')
+SOCIAL_AUTH_GITHUB_KEY = get_secret("SOCIAL_AUTH_GITHUB_KEY")
+SOCIAL_AUTH_GITHUB_SECRET = get_secret("SOCIAL_AUTH_GITHUB_SECRET")
 
 AUTHENTICATION_BACKENDS = [
     'config.backends.GithubBackend',  # Custom Backend
